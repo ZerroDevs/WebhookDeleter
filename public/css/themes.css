@@ -1,0 +1,39 @@
+:root {
+	/* Light theme */
+	--light-bg: #ffffff;
+	--light-header-bg: #f6f6f7;
+	--light-text: #2e3338;
+	--light-hover-bg: #e3e5e8;
+	--light-input-bg: #ebedef;
+	--light-button: #5865f2;
+	--light-button-hover: #4752c4;
+
+	/* Dark theme */
+	--dark-bg: #36393f;
+	--dark-header-bg: #2f3136;
+	--dark-text: #ffffff;
+	--dark-hover-bg: #42464d;
+	--dark-input-bg: #40444b;
+	--dark-button: #5865f2;
+	--dark-button-hover: #4752c4;
+}
+
+[data-theme="light"] {
+	--bg-color: var(--light-bg);
+	--header-bg: var(--light-header-bg);
+	--text-color: var(--light-text);
+	--hover-bg: var(--light-hover-bg);
+	--input-bg: var(--light-input-bg);
+	--button-color: var(--light-button);
+	--button-hover: var(--light-button-hover);
+}
+
+[data-theme="dark"] {
+	--bg-color: var(--dark-bg);
+	--header-bg: var(--dark-header-bg);
+	--text-color: var(--dark-text);
+	--hover-bg: var(--dark-hover-bg);
+	--input-bg: var(--dark-input-bg);
+	--button-color: var(--dark-button);
+	--button-hover: var(--dark-button-hover);
+}

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +7,16 @@
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
+	<header class="header">
+		<div class="logo-container">
+			<img src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6a49cf127bf92de1e2_icon_clyde_blurple_RGB.png" alt="Discord Logo" class="discord-logo">
+			<span>Webhook Deleter</span>
+		</div>
+		<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+			<div id="theme-icon"></div>
+		</button>
+	</header>
+
 	<div class="container">
 		<h1>Discord Webhook Deleter</h1>
 		<div class="input-container">
@@ -15,6 +25,8 @@
 		</div>
 		<div id="message" class="message"></div>
 	</div>
-	<script src="script.js"></script>
+
+	<script src="js/theme.js"></script>
+	<script src="js/script.js"></script>
 </body>
 </html>

@@ -3,30 +3,60 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Discord Webhook Deleter</title>
+	<title>Discord Tools</title>
 	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="css/home.css">
+	<link rel="stylesheet" href="css/header.css">
 </head>
 <body>
 	<header class="header">
 		<div class="logo-container">
-			<img src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6a49cf127bf92de1e2_icon_clyde_blurple_RGB.png" alt="Discord Logo" class="discord-logo">
-			<span>Webhook Deleter</span>
+			<span>Discord Tools</span>
 		</div>
-		<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-			<div id="theme-icon"></div>
-		</button>
+		<div class="header-right">
+			<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+				<div id="theme-icon"></div>
+			</button>
+			<button id="loginBtn" class="login-btn" onclick="signInWithDiscord()">
+				Login with Discord
+			</button>
+			<!-- User profile will be inserted here by auth.js -->
+		</div>
 	</header>
 
-	<div class="container">
-		<h1>Discord Webhook Deleter</h1>
-		<div class="input-container">
-			<input type="text" id="webhookUrl" placeholder="Enter Webhook URL">
-			<button onclick="deleteWebhook()">Delete Webhook</button>
-		</div>
-		<div id="message" class="message"></div>
-	</div>
 
+	<main class="main-content">
+		<section class="hero">
+			<h1>Discord Webhook Tools</h1>
+			<p>Manage your Discord webhooks with ease</p>
+		</section>
+
+		<section class="features">
+			<div class="feature-card">
+				<h2>Webhook Deleter</h2>
+				<p>Delete unwanted Discord webhooks securely</p>
+				<a href="webhook-deleter.html" class="feature-btn">Try Now</a>
+			</div>
+			
+			<div class="feature-card locked">
+				<h2>Webhook Sender</h2>
+				<p>Send custom messages through webhooks</p>
+				<button class="feature-btn" disabled>Login Required</button>
+			</div>
+		</section>
+	</main>
+
+	<!-- Load Supabase -->
+	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 	<script src="js/theme.js"></script>
-	<script src="js/script.js"></script>
+	<script src="js/auth.js"></script>
+	<script>
+		// Initialize auth listener after DOM content is loaded
+		document.addEventListener('DOMContentLoaded', () => {
+			setTimeout(() => {
+				initAuthListener();
+			}, 1000); // Give time for Supabase to initialize
+		});
+	</script>
 </body>
 </html>

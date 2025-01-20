@@ -1,0 +1,107 @@
+.main-content {
+	padding-top: 80px;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding-inline: 20px;
+}
+
+.hero {
+	text-align: center;
+	padding: 60px 0;
+}
+
+.hero h1 {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+	color: var(--button-color);
+}
+
+.hero p {
+	font-size: 1.2rem;
+	color: var(--text-color);
+	opacity: 0.8;
+}
+
+.features {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 2rem;
+	padding: 2rem 0;
+}
+
+.feature-card {
+	background-color: var(--header-bg);
+	padding: 2rem;
+	border-radius: 10px;
+	text-align: center;
+	transition: transform 0.2s;
+}
+
+.feature-card:hover {
+	transform: translateY(-5px);
+}
+
+.feature-card.locked {
+	opacity: 0.7;
+	position: relative;
+}
+
+.feature-card h2 {
+	color: var(--button-color);
+	margin-bottom: 1rem;
+}
+
+.feature-card p {
+	margin-bottom: 1.5rem;
+	color: var(--text-color);
+	opacity: 0.8;
+}
+
+.feature-btn {
+	display: inline-block;
+	padding: 10px 20px;
+	background-color: var(--button-color);
+	color: white;
+	text-decoration: none;
+	border-radius: 5px;
+	border: none;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+
+.feature-btn:hover:not([disabled]) {
+	background-color: var(--button-hover);
+}
+
+.feature-btn[disabled] {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+.login-btn {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 16px;
+	background-color: var(--button-color);
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+
+.login-btn:hover {
+	background-color: var(--button-hover);
+}
+
+.login-btn img {
+	width: 24px;
+	height: 24px;
+}
+
+.header-right {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}

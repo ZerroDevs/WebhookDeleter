@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Discord Webhook Sender</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="css/sender.css">
+	<link rel="stylesheet" href="css/header.css">
+</head>
+<body>
+	<header class="header">
+		<div class="logo-container">
+			<a href="/" class="header-link">Discord Tools</a>
+		</div>
+		<div class="header-right">
+			<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+				<div id="theme-icon"></div>
+			</button>
+			<!-- User profile will be inserted here by auth.js -->
+		</div>
+	</header>
+
+	<div class="container sender-container">
+		<h1>Discord Webhook Sender</h1>
+		<div class="webhook-form">
+			<input type="text" id="webhookUrl" placeholder="Enter Webhook URL" class="full-width">
+			<input type="text" id="username" placeholder="Custom Username (optional)" class="full-width">
+			<input type="text" id="avatarUrl" placeholder="Avatar URL (optional)" class="full-width">
+			<textarea id="message" placeholder="Enter your message" class="full-width"></textarea>
+			<div class="embed-section">
+				<h3>Embed Options</h3>
+				<input type="text" id="embedTitle" placeholder="Embed Title">
+				<input type="text" id="embedColor" placeholder="Color (hex)">
+				<textarea id="embedDescription" placeholder="Embed Description"></textarea>
+			</div>
+			<button onclick="sendWebhookMessage()" class="send-btn">Send Message</button>
+		</div>
+		<div id="message" class="message"></div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+	<script src="js/theme.js"></script>
+	<script src="js/auth.js"></script>
+	<script src="js/sender.js"></script>
+	<script>
+		// Initialize auth listener and check authentication
+		document.addEventListener('DOMContentLoaded', async () => {
+			await initSupabase();
+			initAuthListener();
+			const { data: { session } } = await supabase.auth.getSession();
+			if (!session) {
+				window.location.href = '/';
+			}
+		});
+	</script>
+</body>
+</html>

@@ -1,21 +1,30 @@
 :root {
 	/* Light theme */
-	--light-bg: #ffffff;
-	--light-header-bg: #f6f6f7;
-	--light-text: #2e3338;
-	--light-hover-bg: #e3e5e8;
-	--light-input-bg: #ebedef;
-	--light-button: #5865f2;
-	--light-button-hover: #4752c4;
+	--light-bg: #f0f2f5;
+	--light-header-bg: rgba(255, 255, 255, 0.85);
+	--light-text: #1a1c20;
+	--light-hover-bg: rgba(227, 229, 232, 0.8);
+	--light-input-bg: rgba(235, 237, 239, 0.9);
+	--light-button: #7289da;
+	--light-button-hover: #5c73c7;
+	--light-card-bg: rgba(255, 255, 255, 0.7);
+	--light-shadow: rgba(0, 0, 0, 0.1);
 
 	/* Dark theme */
-	--dark-bg: #36393f;
-	--dark-header-bg: #2f3136;
+	--dark-bg: #1a1b1e;
+	--dark-header-bg: rgba(47, 49, 54, 0.85);
 	--dark-text: #ffffff;
-	--dark-hover-bg: #42464d;
-	--dark-input-bg: #40444b;
-	--dark-button: #5865f2;
-	--dark-button-hover: #4752c4;
+	--dark-hover-bg: rgba(66, 70, 77, 0.8);
+	--dark-input-bg: rgba(64, 68, 75, 0.9);
+	--dark-button: #7289da;
+	--dark-button-hover: #5c73c7;
+	--dark-card-bg: rgba(47, 49, 54, 0.7);
+	--dark-shadow: rgba(0, 0, 0, 0.25);
+
+	/* Common */
+	--glass-blur: blur(10px);
+	--transition-speed: 0.3s;
+	--border-radius: 12px;
 }
 
 [data-theme="light"] {
@@ -26,6 +35,8 @@
 	--input-bg: var(--light-input-bg);
 	--button-color: var(--light-button);
 	--button-hover: var(--light-button-hover);
+	--card-bg: var(--light-card-bg);
+	--shadow: var(--light-shadow);
 }
 
 [data-theme="dark"] {
@@ -36,4 +47,6 @@
 	--input-bg: var(--dark-input-bg);
 	--button-color: var(--dark-button);
 	--button-hover: var(--dark-button-hover);
+	--card-bg: var(--dark-card-bg);
+	--shadow: var(--dark-shadow);
 }

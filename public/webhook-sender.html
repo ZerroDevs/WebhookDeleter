@@ -29,15 +29,52 @@
 			<input type="text" id="username" placeholder="Custom Username (optional)" class="full-width">
 			<input type="text" id="avatarUrl" placeholder="Avatar URL (optional)" class="full-width">
 			<textarea id="message" placeholder="Enter your message" class="full-width"></textarea>
+			
 			<div class="embed-section">
 				<h3>Embed Options</h3>
 				<input type="text" id="embedTitle" placeholder="Embed Title">
 				<input type="text" id="embedColor" placeholder="Color (hex)">
 				<textarea id="embedDescription" placeholder="Embed Description"></textarea>
+				<input type="text" id="embedImage" placeholder="Image URL (optional)">
+				<input type="text" id="embedThumbnail" placeholder="Thumbnail URL (optional)">
 			</div>
-			<button onclick="sendWebhookMessage()" class="send-btn">Send Message</button>
+
+			<div class="advanced-options">
+				<h3>Advanced Options</h3>
+				<div class="option-group">
+					<label>
+						<input type="checkbox" id="saveTemplate">
+						Save as Template
+					</label>
+					<input type="text" id="templateName" placeholder="Template Name" class="template-input">
+				</div>
+				<div class="saved-templates">
+					<h4>Saved Templates</h4>
+					<select id="templateSelect">
+						<option value="">Select a template</option>
+					</select>
+					<button onclick="deleteTemplate()" class="delete-template">Delete Template</button>
+				</div>
+				<div class="schedule-options">
+					<h4>Schedule Message</h4>
+					<input type="datetime-local" id="scheduleTime">
+					<select id="repeatInterval">
+						<option value="">No Repeat</option>
+						<option value="daily">Daily</option>
+						<option value="weekly">Weekly</option>
+						<option value="monthly">Monthly</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="button-group">
+				<button onclick="sendWebhookMessage()" class="send-btn">Send Message</button>
+				<button onclick="scheduleMessage()" class="schedule-btn">Schedule Message</button>
+				<button onclick="previewMessage()" class="preview-btn">Preview Message</button>
+			</div>
 		</div>
 		<div id="message" class="message"></div>
+		<div id="preview" class="preview-container"></div>
 	</div>
 
 	<footer class="footer">

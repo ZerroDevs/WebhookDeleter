@@ -2,10 +2,14 @@ const express = require('express');
 const axios = require('axios');
 const path = require('path');
 const { createClient } = require('@supabase/supabase-js');
+const cron = require('node-cron');
 require('dotenv').config();
 
 const app = express();
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+
+// Store scheduled tasks
+const scheduledTasks = new Map();
 
 app.use(express.json());
 app.use(express.static('public'));
@@ -72,6 +76,95 @@ app.post('/send-webhook', authenticateUser, async (req, res) => {
 	} catch (error) {
 		res.status(500).json({ success: false, message: 'Failed to send message' });
 	}
+});
+
+// Schedule webhook message
+app.post('/schedule-webhook', authenticateUser, async (req, res) => {
+    try {
+        const { webhookUrl, content, username, avatar_url, embeds, scheduleTime, repeatInterval } = req.body;
+        const userId = req.user.id;
+        const taskId = `${userId}-${Date.now()}`;
+
+        const message = { content, username, avatar_url, embeds };
+        const scheduleTimestamp = new Date(scheduleTime).getTime();
+
+        if (scheduleTimestamp < Date.now()) {
+            return res.status(400).json({ success: false, message: 'Cannot schedule messages in the past' });
+        }
+
+        let cronExpression;
+        switch (repeatInterval) {
+            case 'daily':
+                cronExpression = `${new Date(scheduleTime).getMinutes()} ${new Date(scheduleTime).getHours()} * * *`;
+                break;
+            case 'weekly':
+                cronExpression = `${new Date(scheduleTime).getMinutes()} ${new Date(scheduleTime).getHours()} * * ${new Date(scheduleTime).getDay()}`;
+                break;
+            case 'monthly':
+                cronExpression = `${new Date(scheduleTime).getMinutes()} ${new Date(scheduleTime).getHours()} ${new Date(scheduleTime).getDate()} * *`;
+                break;
+            default:
+                // One-time schedule
+                setTimeout(async () => {
+                    try {
+                        await axios.post(webhookUrl, message);
+                        scheduledTasks.delete(taskId);
+                    } catch (error) {
+                        console.error(`Failed to send scheduled message: ${error.message}`);
+                    }
+                }, scheduleTimestamp - Date.now());
+                
+                scheduledTasks.set(taskId, { userId, webhookUrl, message, scheduleTime, repeatInterval: null });
+                return res.json({ success: true, message: 'Message scheduled successfully' });
+        }
+
+        // Set up recurring task
+        const task = cron.schedule(cronExpression, async () => {
+            try {
+                await axios.post(webhookUrl, message);
+            } catch (error) {
+                console.error(`Failed to send scheduled message: ${error.message}`);
+            }
+        });
+
+        scheduledTasks.set(taskId, { userId, webhookUrl, message, scheduleTime, repeatInterval, task });
+        res.json({ success: true, message: 'Message scheduled successfully' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Failed to schedule message' });
+    }
+});
+
+// Get user's scheduled messages
+app.get('/scheduled-messages', authenticateUser, (req, res) => {
+    const userId = req.user.id;
+    const userTasks = Array.from(scheduledTasks.entries())
+        .filter(([_, task]) => task.userId === userId)
+        .map(([id, task]) => ({
+            id,
+            webhookUrl: task.webhookUrl,
+            scheduleTime: task.scheduleTime,
+            repeatInterval: task.repeatInterval
+        }));
+
+    res.json({ success: true, tasks: userTasks });
+});
+
+// Delete scheduled message
+app.delete('/scheduled-message/:taskId', authenticateUser, (req, res) => {
+    const { taskId } = req.params;
+    const userId = req.user.id;
+
+    const task = scheduledTasks.get(taskId);
+    if (!task || task.userId !== userId) {
+        return res.status(404).json({ success: false, message: 'Scheduled message not found' });
+    }
+
+    if (task.task) {
+        task.task.stop();
+    }
+    scheduledTasks.delete(taskId);
+
+    res.json({ success: true, message: 'Scheduled message deleted successfully' });
 });
 
 // Add endpoint to provide Supabase credentials

@@ -6,11 +6,19 @@
 	background-color: var(--header-bg);
 	backdrop-filter: var(--glass-blur);
 	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-	padding: 1rem 2rem;
+	padding: 0.5rem 2rem;
 	z-index: 1000;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	transition: all var(--transition-speed);
+	transform: translateY(0);
+	will-change: transform, padding;
+}
+
+.header:not(:hover) {
+	padding: 0.25rem 2rem;
+	transform: translateY(-40%);
 }
 
 .user-profile {
@@ -22,6 +30,7 @@
 	padding: 8px;
 	border-radius: var(--border-radius);
 	transition: background-color var(--transition-speed);
+	will-change: background-color;
 }
 
 .user-profile:hover {
@@ -34,10 +43,13 @@
 	border-radius: 50%;
 	border: 2px solid var(--button-color);
 	transition: transform var(--transition-speed);
+	will-change: transform;
+	transform: translateZ(0);
+	backface-visibility: hidden;
 }
 
 .user-profile:hover img {
-	transform: scale(1.05);
+	transform: scale(1.05) translateZ(0);
 }
 
 .user-profile span {
@@ -56,15 +68,16 @@
 	padding: 0.5rem;
 	min-width: 180px;
 	opacity: 0;
-	transform: translateY(-10px);
+	transform: translateY(-10px) translateZ(0);
 	pointer-events: none;
 	transition: all var(--transition-speed);
 	border: 1px solid rgba(255, 255, 255, 0.1);
+	will-change: opacity, transform;
 }
 
 .dropdown-menu.show {
 	opacity: 1;
-	transform: translateY(0);
+	transform: translateY(0) translateZ(0);
 	pointer-events: auto;
 }
 
@@ -82,11 +95,13 @@
 	align-items: center;
 	gap: 8px;
 	transition: all var(--transition-speed);
+	will-change: transform;
+	transform: translateZ(0);
 }
 
 .dropdown-menu button:hover {
 	background-color: var(--hover-bg);
-	transform: translateX(4px);
+	transform: translateX(4px) translateZ(0);
 }
 
 .theme-toggle {
@@ -99,6 +114,7 @@
 	align-items: center;
 	justify-content: center;
 	transition: all var(--transition-speed);
+	will-change: transform;
 }
 
 .theme-toggle:hover {
@@ -110,4 +126,6 @@
 	width: 24px;
 	height: 24px;
 	transition: transform var(--transition-speed);
+	will-change: transform;
+	transform: translateZ(0);
 }
